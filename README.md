@@ -18,6 +18,7 @@ Each side of the square that is created has the length ((N+1)*(N/2))
 # External References
 
 Here are some additional resources that reference the same problem:
+
 [https://pyrigan.com/2017/02/17/the-partridge-puzzle/](https://pyrigan.com/2017/02/17/the-partridge-puzzle/)
 
 [https://www.youtube.com/watch?v=eqyuQZHfNPQ](https://www.youtube.com/watch?v=eqyuQZHfNPQ)
@@ -30,6 +31,7 @@ Here are some additional resources that reference the same problem:
 # The Code
 Start with PuzzleSolver - this has the `main()` class.
 This file has the following flags:
+
 `TIMES_TO_RUN` - it will create a loop and try the solve several times, used to 
 work out the quickest way to do something.
 
@@ -45,7 +47,10 @@ mechanics to make everything work.
 
 # Timings and metrics
 The code is single threaded and takes about just over 1 hour to complete 54,099,448,673 recursions
-which gives the correct answer of 18,656 solutions for N=8.  There are some files created in
-the `output` folder.  The txt file is a textual representation of the solution.  There are
-several HTML files that are generated.  These HTML files give a nice graphical view of the
+which gives the correct answer of 18,656 solutions for N=8.  
+
+There are some files created in the `output` folder.
+
+* `Solutions.txt` - A textual representation of the solution.
+* `Solutions*.html` - These sequentially numbered HTML files give a nice graphical view of the
 solutions.  It creates several HTML files otherwise, a single file is too big.
