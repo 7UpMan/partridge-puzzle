@@ -66,14 +66,14 @@ public class PuzzleGrid {
 
 
     /**
-     * Set a box in the grid at given location.  We just plot left edge and bottom edge.
+     * Set a box in the grid at given location.  We just plot left edge. Because we
+     * build from the left bottom, this is all we need, and is *much* quicker.
      * @param location
      * @param size
      * @return The value assigned to the box.
      */
     public void setSquare(PuzzleGridLocation location, int size) {
         for (int i = 0; i < size; i++) {
-            //grid[x + i][y] = size;
             grid[location.getX()][location.getY() + i] = size;
         }
         // We keep track of this so that we can output the solution later
@@ -81,14 +81,13 @@ public class PuzzleGrid {
     }
 
     /**
-     * Remove a square from the grid at given location. We just clear left edge and bottom edge.
+     * Remove a square from the grid at given location. We just clear tje left edge.
      * @param x
      * @param y
      * @param size
      */
     public void removeSquare(PuzzleGridLocation location, int size) {
         for (int i = 0; i < size; i++) {
-            //grid[x + i][y] = 0;
             grid[location.getX()][location.getY() + i] = 0;
         }
         placements.pop();
@@ -116,8 +115,8 @@ public class PuzzleGrid {
         // Size counts from 1. Arrays are zero based.
 
         /* We only need to check the horizontal direction, as the vertical direction
-         * will be empty above this space because we will from the bottom left and
-         * all pieces are squares.
+         * will be empty above this space because we build from the bottom left and
+         * all pieces are squares.  No overhangs are possible
          */
         int maxSizePossible = Math.min(maxPuzzlePieceWidth, Math.min(gridWidth - location.getX() , gridWidth - location.getY()));
 
@@ -141,21 +140,6 @@ public class PuzzleGrid {
 
     public int getLocation(PuzzleGridLocation location) {
         return grid[location.getX()][location.getY()];
-    }
-
-    /**
-     * Get the value at the given location, with bounds checking.
-     * 
-     * @param x
-     * @param y
-     * @param errorValue The value to return if out of bounds.
-     * @return
-     */
-    private int getLocationWithBoundsCheck(int x, int y, int errorValue) {
-        if (x < 0 || x >= gridWidth || y < 0 || y >= gridWidth) {
-            return errorValue;
-        }
-        return grid[x][y];
     }
 
     private static final String SEQUENCE = ".123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0";

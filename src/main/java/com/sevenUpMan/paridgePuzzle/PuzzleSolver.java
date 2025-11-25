@@ -178,22 +178,6 @@ public class PuzzleSolver {
             return true;
         }
 
-        // // If the size is 1, the square above to the left must be empty otherwise we
-        // can skip
-        // if (size == 1 && currentLocation.getX() > 0 && currentLocation.getY() <
-        // gridWidth - 1) {
-        // return !grid.isLocationFree(currentLocation.getX() - 1,
-        // currentLocation.getY() + 1);
-        // }
-
-        // // If size is 2 and this is the last piece of this size, the square above
-        // left mst be empty
-        // if (size == 2 && counters.getCountOfSize(2) == 1
-        // && currentLocation.getX() > 0 && currentLocation.getY() < gridWidth - 1) {
-        // return !grid.isLocationFree(currentLocation.getX() - 1,
-        // currentLocation.getY() + 1);
-        // }
-
         // If the size is 3 or above it cannot be placed 1 row from the edge
         if ((size >= 3) && (currentLocation.getX() == 1 || currentLocation.getY() == 1
                 || currentLocation.getX() == gridWidth - 1 || currentLocation.getY() == gridWidth - 1)) {
