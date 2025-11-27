@@ -113,16 +113,22 @@ public class PuzzleSolver {
         // No need to check for space left as the nextLoc == null test below gets it
         // first
 
-        int squareSize = grid.getMaxSquareAtLocation(currentLocation);
+        int maxSquareSize = grid.getMaxSquareAtLocation(currentLocation);
 
-        // Get the biggest piece that can fit here
-        int biggestPieceAvailable = counters.getBiggestPieceAvailable(squareSize);
-        if (biggestPieceAvailable == -1) {
+        int smallestAvailablePieceSize = counters.getSmallestAvailablePieceSize();
+        if(smallestAvailablePieceSize == -1 || smallestAvailablePieceSize > maxSquareSize) {
+            // No pieces left that will fit here
             return;
         }
 
+        // // Get the biggest piece that can fit here
+        // int biggestPieceAvailable = counters.getBiggestPieceAvailable(maxSquareSize);
+        // if (biggestPieceAvailable == -1) {
+        //     return;
+        // }
+
         // Try each available piece size
-        for (int size = 1; size <= biggestPieceAvailable; size++) {
+        for (int size = smallestAvailablePieceSize; size <= maxSquareSize; size++) {
             // Don't have this piece available
             if (!counters.hasPuzzlePieceOfSize(size)) {
                 continue;
@@ -239,12 +245,17 @@ public class PuzzleSolver {
         diaplayMetrics();
         Tools.writeFile(SOLUTIONS_TXT, String.format("Solution number %d%n%s%n%n", solvedCount, grid.toString()));
 
-        // Deal with the html file
+        /* Create a series of HTML files each with up to 1000 solutions (the first
+         * file has solutions 0-999, the second 1000-1999, etc).
+         * Each files starts with head.html and ends with footer.html
+         */
+
         if (currentHtmlFileName == null || solvedCount % 1000 == 0) {
             // If we already have a file, finish it off
             if (currentHtmlFileName != null) {
                 String footer = Tools.readFile("footer.html");
                 Tools.writeFile(currentHtmlFileName, footer);
+                Tools.closeFile(currentHtmlFileName);
             }
             currentHtmlFileName = String.format(SOLUTIONS_HTML, solvedCount == 1 ? 0 : solvedCount);
             String header = Tools.readFile("head.html");
@@ -262,7 +273,7 @@ public class PuzzleSolver {
             String footer = Tools.readFile("footer.html");
             Tools.writeFile(currentHtmlFileName, footer);
         }
-        Tools.closeFile();
+        Tools.closeAllFiles();
     }
 
     private long displayAtRecursionCount = 10000000000L; // 10 billion

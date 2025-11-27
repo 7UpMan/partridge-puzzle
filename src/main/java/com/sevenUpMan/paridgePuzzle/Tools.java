@@ -69,7 +69,21 @@ public class Tools {
         }
     }
 
-    public static void closeFile() {
+    public static void closeFile(String fileName) {
+        if (writers.containsKey(fileName)) {
+            BufferedWriter writer = writers.get(fileName);
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (Exception ex) {
+                /* ignore */
+            }
+            writers.remove(fileName);
+        }
+    }
+
+    public static void closeAllFiles() {
         for (BufferedWriter writer : writers.values()) {
             try {
                 if (writer != null) {

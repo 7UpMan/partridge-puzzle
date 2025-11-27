@@ -3,10 +3,12 @@ package com.sevenUpMan.paridgePuzzle;
 public class PuzzlePieceCounters {
     private final int puzzleSize;
     private int[] pieceCounts;
+    private int smallestAvailablePieceSize;
 
     public PuzzlePieceCounters(int puzzleSize) {
         this.puzzleSize = puzzleSize;
         this.pieceCounts = new int[puzzleSize];
+        this.smallestAvailablePieceSize = 1;
 
         // Initialize counts to correct values
         for (int i = 0; i < puzzleSize; i++) {
@@ -45,12 +47,30 @@ public class PuzzlePieceCounters {
         return -1; // Nothing left that will fit
     }
 
+    public int getSmallestAvailablePieceSize() {
+        return smallestAvailablePieceSize;
+    }
+
     public void takePuzzlePieceOfSize(int size) {
         pieceCounts[size - 1]--;
+        if(smallestAvailablePieceSize == size && pieceCounts[size - 1] == 0) {
+            // Update smallest available piece size
+            for(int i = size; i < puzzleSize; i++) {
+                if(pieceCounts[i] > 0) {
+                    smallestAvailablePieceSize = i + 1;
+                    return;
+                }
+            }
+            // No pieces left
+            smallestAvailablePieceSize = -1;
+        }
     }
 
     public void returnPuzzlePieceOfSize(int size) {
         pieceCounts[size - 1]++;
+        if(smallestAvailablePieceSize == -1 || size < smallestAvailablePieceSize) {
+            smallestAvailablePieceSize = size;
+        }
     }
 
     @Override

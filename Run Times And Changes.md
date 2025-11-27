@@ -91,6 +91,26 @@ Recursions: 50,010,754,611, Time taken: 4,408,989 ms, Recursions/ms: 11,342.91
 Total time taken: 4,764,118 ms, with 54,099,448,673 recursions, giving 18,656 solutions  
 Individual time taken: 4,764,118 ms
 
+## Kept track of smallest piece available and constrained loops accordingly
+Max puzzle piece width: 8
+Recursions: 10,013,400,472, Time taken: 867,526 ms, Recursions/ms: 11,542.48
+Recursions: 20,013,871,572, Time taken: 1,731,199 ms, Recursions/ms: 11,560.70
+Recursions: 30,014,501,310, Time taken: 2,596,829 ms, Recursions/ms: 11,558.14
+Recursions: 40,076,984,821, Time taken: 3,467,480 ms, Recursions/ms: 11,557.96
+Recursions: 50,010,754,611, Time taken: 4,316,530 ms, Recursions/ms: 11,585.87
+Total time taken: 4,665,873 ms, with 54,099,448,673 recursions, giving 18,656 solutions
+Individual time taken: 4,665,873 ms
+
+## Removed keeping track of pice placement in a stack.  Made the toHtmlString() harder, but this is infrequent.
+Max puzzle piece width: 8
+Recursions: 10,013,400,472, Time taken: 751,227 ms, Recursions/ms: 13,329.39
+Recursions: 20,013,871,572, Time taken: 1,498,642 ms, Recursions/ms: 13,354.67
+Recursions: 30,014,501,310, Time taken: 2,247,111 ms, Recursions/ms: 13,356.93
+Recursions: 40,076,984,821, Time taken: 3,000,759 ms, Recursions/ms: 13,355.62
+Recursions: 50,010,754,611, Time taken: 3,733,757 ms, Recursions/ms: 13,394.22
+Total time taken: 4,035,360 ms, with 54,099,448,673 recursions, giving 18,656 solutions
+Individual time taken: 4,035,360 ms
+
 
 # Old Logic routes
 I tried a different logic.  Rather than holding an array that represented squares and

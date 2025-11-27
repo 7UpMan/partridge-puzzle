@@ -1,14 +1,11 @@
 package com.sevenUpMan.paridgePuzzle;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Deque;
 
 public class PuzzleGrid {
     private int gridWidth;
     private int maxPuzzlePieceWidth;
     private int[][] grid;
-    private Deque<PuzzlePiecePlacement> placements = new ArrayDeque<>();
 
     public PuzzleGrid(int gridWidth, int maxPuzzlePieceWidth) {
         this.gridWidth = gridWidth;
@@ -76,8 +73,6 @@ public class PuzzleGrid {
         for (int i = 0; i < size; i++) {
             grid[location.getX()][location.getY() + i] = size;
         }
-        // We keep track of this so that we can output the solution later
-        placements.push(new PuzzlePiecePlacement(location, size));
     }
 
     /**
@@ -90,7 +85,6 @@ public class PuzzleGrid {
         for (int i = 0; i < size; i++) {
             grid[location.getX()][location.getY() + i] = 0;
         }
-        placements.pop();
     }
 
 
@@ -160,24 +154,52 @@ public class PuzzleGrid {
         }
         return sb.toString();
     }
-   
 
+    /**
+     * Generate the same output at getHtmlString() but without using the placements
+     * data structure because we are going to remove it.
+     * @return
+     */
     public String toHtmlString() {
         StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"grid\">");
-        for (PuzzlePiecePlacement placement : placements) {
-            sb.append(String.format(
-                    "<div class=\"square s%d c%d x%d y%d\"></div>%n",
-                    placement.size,
-                    placement.size,
-                    placement.location.getX() + 1,
-                    placement.location.getY() + 1));
-            
+
+        // Create a copy of the grid
+        int[][] gridCopy = new int[gridWidth][gridWidth];
+        for (int i = 0; i < gridWidth; i++) {
+            System.arraycopy(grid[i], 0, gridCopy[i], 0, gridWidth);
         }
+
+        int x=0;
+        int y=0;
+
+        while(y < gridWidth) {
+            int size = gridCopy[x][y];
+            if(size != 0) {
+                sb.append(String.format(
+                            "<div class=\"square s%d c%d x%d y%d\"></div>%n",
+                            size,
+                            size,
+                            x + 1,
+                            y + 1));
+
+                // Clear the square from the copy
+                for(int i=0; i<size; i++) {
+                    gridCopy[x][y + i] = 0;
+                }
+                // Move x on
+                x += size;
+            } else {
+                x++;
+            }
+
+            if(x >= gridWidth) {
+                x = 0;
+                y++;
+            }
+        }
+       
         sb.append("</div>");
         return sb.toString();
-    }
-
-    protected record PuzzlePiecePlacement(PuzzleGridLocation location, int size) {
     }
 }
