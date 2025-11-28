@@ -1,4 +1,4 @@
-package com.sevenUpMan.paridgePuzzle;
+package com.sevenUpMan.partridgePuzzle;
 
 /**
  * Represents a location in the puzzle grid.

@@ -1,4 +1,4 @@
-package com.sevenUpMan.paridgePuzzle;
+package com.sevenUpMan.partridgePuzzle;
 
 public class PuzzlePieceCounters {
     private final int puzzleSize;

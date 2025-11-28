@@ -1,4 +1,4 @@
-package com.sevenUpMan.paridgePuzzle;
+package com.sevenUpMan.partridgePuzzle;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;

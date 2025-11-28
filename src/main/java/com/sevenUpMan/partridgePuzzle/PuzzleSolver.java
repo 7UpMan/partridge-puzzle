@@ -1,4 +1,4 @@
-package com.sevenUpMan.paridgePuzzle;
+package com.sevenUpMan.partridgePuzzle;
 
 /**
  * Solve the Partridge puzzle by placing puzzle pieces in a grid.
@@ -28,12 +28,15 @@ public class PuzzleSolver {
 
     private static final int TIMES_TO_RUN = 1;
     public static final boolean FAKE_DATA = false;
-    public static final int MAX_PIECE_SIZE = 8;
+    public static final int DEFAULT_MAX_PIECE_SIZE = 8;
     private static final String SOLUTIONS_TXT = "Solutions.txt";
     private static final String SOLUTIONS_HTML = "Solutions%05d.html";
 
     public static void main(String[] args) {
-        PuzzleSolver solver = new PuzzleSolver(MAX_PIECE_SIZE);
+
+        int maxPieceSize = parseCommanline(args);
+
+        PuzzleSolver solver = new PuzzleSolver(maxPieceSize);
         solver.solve();
     }
 
@@ -120,12 +123,6 @@ public class PuzzleSolver {
             // No pieces left that will fit here
             return;
         }
-
-        // // Get the biggest piece that can fit here
-        // int biggestPieceAvailable = counters.getBiggestPieceAvailable(maxSquareSize);
-        // if (biggestPieceAvailable == -1) {
-        //     return;
-        // }
 
         // Try each available piece size
         for (int size = smallestAvailablePieceSize; size <= maxSquareSize; size++) {
@@ -229,6 +226,29 @@ public class PuzzleSolver {
     private void removePiece(PuzzleGridLocation location, int size, PuzzleGrid grid, PuzzlePieceCounters counters) {
         grid.removeSquare(location, size);
         counters.returnPuzzlePieceOfSize(size);
+    }
+
+    private static int parseCommanline(String[] args) {
+        int maxPieceSize = DEFAULT_MAX_PIECE_SIZE;
+        if (args.length == 1) {
+            try {
+                maxPieceSize = Integer.parseInt(args[0]);
+                if (maxPieceSize < 2 || maxPieceSize > 10) {
+                    System.err.println("Error: MAX_PIECE_SIZE must be between 2 and 10");
+                    System.err.println("Usage: java PuzzleSolver [max_piece_size]");
+                    System.exit(1);
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Error: Invalid number format");
+                System.err.println("Usage: java PuzzleSolver [max_piece_size]");
+                System.exit(1);
+            }
+        } else if (args.length > 1) {
+            System.err.println("Error: Too many arguments");
+            System.err.println("Usage: java PuzzleSolver [max_piece_size]");
+            System.exit(1);
+        }
+        return maxPieceSize;
     }
 
     private String currentHtmlFileName = null;

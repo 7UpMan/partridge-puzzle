@@ -1,10 +1,10 @@
-package com.sevenUpMan.paridgePuzzle.old;
+package com.sevenUpMan.partridgePuzzle.old;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import com.sevenUpMan.paridgePuzzle.PuzzleGrid;
-import com.sevenUpMan.paridgePuzzle.PuzzleGridLocation;
+import com.sevenUpMan.partridgePuzzle.PuzzleGrid;
+import com.sevenUpMan.partridgePuzzle.PuzzleGridLocation;
 
 public class PuzzlePieceManager {
     private Deque<PuzzlePiecePlacement> placements = new ArrayDeque<>();
